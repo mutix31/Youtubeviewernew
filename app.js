@@ -3,7 +3,7 @@ const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM';
 let nextPageToken = '';
 let currentFilter = 'date'; // Varsayılan filtre
 let currentLanguage = 'tr'; // Varsayılan dil
-let favorites = [];
+let favorites = JSON.parse(localStorage.getItem('favorites')) || []; // Favorileri localStorage'dan al
 let watchHistory = JSON.parse(localStorage.getItem('watchHistory')) || [];
 
 const settingsModal = document.getElementById('settingsModal');
@@ -174,6 +174,7 @@ function hideLoadingSpinner() {
 function addToFavorites(video) {
     if (!favorites.some(fav => fav.id === video.id)) {
         favorites.push(video);
+        localStorage.setItem('favorites', JSON.stringify(favorites)); // Favorileri localStorage'a kaydet
         alert('Favorilere eklendi!');
     } else {
         alert('Bu video zaten favorilerinizde!');
