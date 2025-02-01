@@ -16,20 +16,6 @@
             <div class="navbar-start">
                 <button class="navbar-item" onclick="showWatchHistory()">📜 İzleme Geçmişi</button>
                 <button class="navbar-item" onclick="toggleFavorites()">❤️ Favorilerim</button>
-                <div class="navbar-item">
-                    <select id="language" onchange="applyLanguage()">
-                        <option value="tr">Türkçe</option>
-                        <option value="en">İngilizce</option>
-                        <option value="de">Almanca</option>
-                    </select>
-                </div>
-                <div class="navbar-item">
-                    <select id="filter" onchange="applyFilter()">
-                        <option value="date">Tarihe Göre</option>
-                        <option value="views">Görüntülenme Sayısı</option>
-                        <option value="duration">Süreye Göre</option>
-                    </select>
-                </div>
             </div>
             <div class="navbar-end">
                 <button class="navbar-item" onclick="toggleTheme()">🌙 Tema Değiştir</button>
@@ -49,6 +35,20 @@
         <h2>⚙️ Ayarlar</h2>
         <label>API Anahtarınız:
             <input type="text" id="apiKey" placeholder="AIzaSy..." disabled>
+        </label>
+        <label>Dil Seçin:
+            <select id="language" onchange="applyLanguage()">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+                <option value="de">Almanca</option>
+            </select>
+        </label>
+        <label>Sıralama Filtresi:
+            <select id="filter" onchange="applyFilter()">
+                <option value="date">Tarihe Göre</option>
+                <option value="views">Görüntülenme Sayısı</option>
+                <option value="duration">Süreye Göre</option>
+            </select>
         </label>
         <button onclick="saveSettings()">Kaydet</button>
     </div>
