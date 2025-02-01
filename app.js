@@ -1,15 +1,15 @@
-
-// YouTube API Konfigürasyon
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
 let API_KEY = localStorage.getItem('ytApiKey') || '';
+let nextPageToken = '';
+let currentFilter = 'date';
+let currentLanguage = 'tr';
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-// DOM Elementleri
 const settingsModal = document.getElementById('settingsModal');
 const apiKeyInput = document.getElementById('apiKey');
 const searchInput = document.getElementById('searchInput');
 const videoGrid = document.getElementById('videoGrid');
 
-// Ayarlar Fonksiyonları
 function toggleSettings() {
     settingsModal.style.display = settingsModal.style.display === 'block' ? 'none' : 'block';
     apiKeyInput.value = API_KEY;
@@ -21,12 +21,6 @@ function saveSettings() {
     toggleSettings();
     loadTrendingVideos();
 }
-
-// Video İşlemleri
-let nextPageToken = '';
-let currentFilter = 'date';
-let currentLanguage = 'tr';
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 async function loadTrendingVideos() {
     if (!API_KEY) return alert('Lütfen API anahtarınızı ayarlayın');
@@ -108,7 +102,7 @@ async function searchVideos(query) {
 }
 
 function renderVideos(videos, append = false) {
-    if (!append) videoGrid.innerHTML = ''; // Eski videoları temizle
+    if (!append) videoGrid.innerHTML = '';
     videoGrid.innerHTML += videos.map(video => `
         <div class="video-card">
             <img src="${video.snippet.thumbnails.medium.url}" 
@@ -130,7 +124,6 @@ function renderVideos(videos, append = false) {
     `).join('');
 }
 
-// Yardımcı Fonksiyonlar
 function formatDuration(duration) {
     const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
     const hours = parseInt(match[1]) || 0;
@@ -188,7 +181,6 @@ function toggleFavorites() {
     renderVideos(favorites);
 }
 
-// Sayfa Yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
