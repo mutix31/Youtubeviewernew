@@ -8,28 +8,34 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="container">
-        <ul><li><strong>YouTube Viewer</strong></li></ul>
-        <ul>
-            <li><button onclick="showWatchHistory()">📜 İzleme Geçmişi</button></li>
-            <li><button onclick="toggleFavorites()">❤️ Favorilerim</button></li>
-            <li>
-                <select id="language" onchange="applyLanguage()">
-                    <option value="tr">Türkçe</option>
-                    <option value="en">İngilizce</option>
-                    <option value="de">Almanca</option>
-                </select>
-            </li>
-            <li>
-                <select id="filter" onchange="applyFilter()">
-                    <option value="date">Tarihe Göre</option>
-                    <option value="views">Görüntülenme Sayısı</option>
-                    <option value="duration">Süreye Göre</option>
-                </select>
-            </li>
-            <li><button onclick="toggleTheme()">🌙 Tema Değiştir</button></li>
-            <li><button onclick="toggleSettings()">⚙️ Ayarlar</button></li>
-        </ul>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <strong>YouTube Viewer</strong>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <button class="navbar-item" onclick="showWatchHistory()">📜 İzleme Geçmişi</button>
+                <button class="navbar-item" onclick="toggleFavorites()">❤️ Favorilerim</button>
+                <div class="navbar-item">
+                    <select id="language" onchange="applyLanguage()">
+                        <option value="tr">Türkçe</option>
+                        <option value="en">İngilizce</option>
+                        <option value="de">Almanca</option>
+                    </select>
+                </div>
+                <div class="navbar-item">
+                    <select id="filter" onchange="applyFilter()">
+                        <option value="date">Tarihe Göre</option>
+                        <option value="views">Görüntülenme Sayısı</option>
+                        <option value="duration">Süreye Göre</option>
+                    </select>
+                </div>
+            </div>
+            <div class="navbar-end">
+                <button class="navbar-item" onclick="toggleTheme()">🌙 Tema Değiştir</button>
+                <button class="navbar-item" onclick="toggleSettings()">⚙️ Ayarlar</button>
+            </div>
+        </div>
     </nav>
 
     <main class="container">
