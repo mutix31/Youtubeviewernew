@@ -1,9 +1,9 @@
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
-let API_KEY = localStorage.getItem('ytApiKey') || '';
+const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM'; // API anahtarı buraya eklendi
 let nextPageToken = '';
 let currentFilter = 'date';
 let currentLanguage = 'tr';
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let favorites = [];
 
 const settingsModal = document.getElementById('settingsModal');
 const apiKeyInput = document.getElementById('apiKey');
@@ -16,14 +16,11 @@ function toggleSettings() {
 }
 
 function saveSettings() {
-    API_KEY = apiKeyInput.value;
-    localStorage.setItem('ytApiKey', API_KEY);
+    alert('API anahtarı artık kod içinde sabit olarak tanımlıdır.');
     toggleSettings();
-    loadTrendingVideos();
 }
 
 async function loadTrendingVideos() {
-    if (!API_KEY) return alert('Lütfen API anahtarınızı ayarlayın');
     showLoadingSpinner();
     
     try {
@@ -68,8 +65,6 @@ async function loadTrendingVideos() {
 }
 
 async function searchVideos(query) {
-    if (!API_KEY) return alert('Lütfen API anahtarınızı ayarlayın');
-    
     try {
         const searchUrl = new URL(`${YT_API_URL}/search`);
         searchUrl.search = new URLSearchParams({
@@ -170,7 +165,6 @@ function hideLoadingSpinner() {
 function addToFavorites(video) {
     if (!favorites.some(fav => fav.id === video.id)) {
         favorites.push(video);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
         alert('Favorilere eklendi!');
     } else {
         alert('Bu video zaten favorilerinizde!');
@@ -184,5 +178,5 @@ function toggleFavorites() {
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    if (API_KEY) loadTrendingVideos();
+    loadTrendingVideos();
 });
