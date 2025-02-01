@@ -1,8 +1,8 @@
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
 const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM';
 let nextPageToken = '';
-let currentFilter = 'date';
-let currentLanguage = 'tr';
+let currentFilter = 'date'; // Varsayılan filtre
+let currentLanguage = 'tr'; // Varsayılan dil
 let favorites = [];
 let watchHistory = JSON.parse(localStorage.getItem('watchHistory')) || [];
 
@@ -10,17 +10,33 @@ const settingsModal = document.getElementById('settingsModal');
 const apiKeyInput = document.getElementById('apiKey');
 const searchInput = document.getElementById('searchInput');
 const videoGrid = document.getElementById('videoGrid');
+const languageSelect = document.getElementById('language');
+const filterSelect = document.getElementById('filter');
 
+// Ayarlar Modalını Aç/Kapat
 function toggleSettings() {
     settingsModal.style.display = settingsModal.style.display === 'block' ? 'none' : 'block';
-    apiKeyInput.value = API_KEY;
 }
 
+// Dil Seçeneğini Uygula
+function applyLanguage() {
+    currentLanguage = languageSelect.value;
+    loadTrendingVideos();
+}
+
+// Filtre Seçeneğini Uygula
+function applyFilter() {
+    currentFilter = filterSelect.value;
+    loadTrendingVideos();
+}
+
+// Ayarları Kaydet
 function saveSettings() {
-    alert('API anahtarı artık kod içinde sabit olarak tanımlıdır.');
     toggleSettings();
+    loadTrendingVideos();
 }
 
+// Trend Videoları Yükle
 async function loadTrendingVideos() {
     showLoadingSpinner();
     
@@ -65,38 +81,7 @@ async function loadTrendingVideos() {
     }
 }
 
-async function searchVideos(query) {
-    try {
-        const searchUrl = new URL(`${YT_API_URL}/search`);
-        searchUrl.search = new URLSearchParams({
-            part: 'snippet',
-            q: query,
-            type: 'video',
-            maxResults: 24,
-            safeSearch: 'moderate',
-            key: API_KEY
-        });
-
-        const searchResponse = await fetch(searchUrl);
-        const searchData = await searchResponse.json();
-        
-        const videoIds = searchData.items.map(item => item.id.videoId);
-        const videosUrl = new URL(`${YT_API_URL}/videos`);
-        videosUrl.search = new URLSearchParams({
-            part: 'snippet,statistics,contentDetails',
-            id: videoIds.join(','),
-            key: API_KEY
-        });
-
-        const videosResponse = await fetch(videosUrl);
-        const videosData = await videosResponse.json();
-        renderVideos(videosData.items);
-    } catch (error) {
-        console.error('Arama Hatası:', error);
-        alert('Arama sırasında hata oluştu');
-    }
-}
-
+// Videoları Ekranda Göster
 function renderVideos(videos, append = false) {
     if (!append) videoGrid.innerHTML = '';
     videoGrid.innerHTML += videos.map(video => `
@@ -120,6 +105,7 @@ function renderVideos(videos, append = false) {
     `).join('');
 }
 
+// Süreyi Formatla
 function formatDuration(duration) {
     const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
     const hours = parseInt(match[1]) || 0;
@@ -133,16 +119,19 @@ function formatDuration(duration) {
     ].filter(Boolean).join(':');
 }
 
+// Sayıyı Formatla
 function formatNumber(num) {
     return parseInt(num).toLocaleString('tr-TR');
 }
 
+// Videoyu Oynat
 function playVideo(videoId) {
     watchHistory.unshift({ id: videoId, timestamp: new Date().toISOString() });
     localStorage.setItem('watchHistory', JSON.stringify(watchHistory));
     window.location.href = `video.html?id=${videoId}`;
 }
 
+// İzleme Geçmişini Göster
 function showWatchHistory() {
     const history = watchHistory.map(item => `
         <div class="video-card" onclick="playVideo('${item.id}')">
@@ -155,12 +144,14 @@ function showWatchHistory() {
     videoGrid.innerHTML = `<h3>İzleme Geçmişi</h3>${history}`;
 }
 
+// Arama İşlevi
 function handleSearch(event) {
     if (event.key === 'Enter') {
         searchVideos(event.target.value);
     }
 }
 
+// Tema Değiştir
 function toggleTheme() {
     const htmlElement = document.documentElement;
     const currentTheme = htmlElement.getAttribute('data-theme');
@@ -169,14 +160,17 @@ function toggleTheme() {
     localStorage.setItem('theme', newTheme);
 }
 
+// Yükleme Spinner'ını Göster
 function showLoadingSpinner() {
     document.getElementById('loadingSpinner').style.display = 'block';
 }
 
+// Yükleme Spinner'ını Gizle
 function hideLoadingSpinner() {
     document.getElementById('loadingSpinner').style.display = 'none';
 }
 
+// Favorilere Ekle
 function addToFavorites(video) {
     if (!favorites.some(fav => fav.id === video.id)) {
         favorites.push(video);
@@ -186,10 +180,12 @@ function addToFavorites(video) {
     }
 }
 
+// Favorileri Göster
 function toggleFavorites() {
     renderVideos(favorites);
 }
 
+// Sayfa Yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
