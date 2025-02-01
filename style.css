@@ -59,14 +59,6 @@ body {
     background: rgba(255, 255, 255, 0.1);
 }
 
-.navbar-item select {
-    background: var(--bg-color);
-    color: var(--text-color);
-    border: 1px solid var(--primary);
-    padding: 0.5rem;
-    border-radius: 8px;
-}
-
 /* Ana İçerik Stili */
 .container {
     padding: 1rem;
@@ -109,20 +101,6 @@ body {
     border-bottom: 2px solid var(--primary);
 }
 
-/* Yorumlar Stili */
-.comment {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.comment-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 1rem;
-}
-
 /* Ayarlar Modal Stili */
 .settings-modal {
     display: none;
@@ -137,6 +115,35 @@ body {
     width: 90%;
     max-width: 500px;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.settings-modal label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.settings-modal select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.settings-modal button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.settings-modal button:hover {
+    background: #cc0000;
 }
 
 /* Yükleme Spinner Stili */
