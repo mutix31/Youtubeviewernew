@@ -1,9 +1,10 @@
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM'; // API anahtarı buraya eklendi
+const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM';
 let nextPageToken = '';
 let currentFilter = 'date';
 let currentLanguage = 'tr';
 let favorites = [];
+let watchHistory = JSON.parse(localStorage.getItem('watchHistory')) || [];
 
 const settingsModal = document.getElementById('settingsModal');
 const apiKeyInput = document.getElementById('apiKey');
@@ -137,7 +138,21 @@ function formatNumber(num) {
 }
 
 function playVideo(videoId) {
+    watchHistory.unshift({ id: videoId, timestamp: new Date().toISOString() });
+    localStorage.setItem('watchHistory', JSON.stringify(watchHistory));
     window.location.href = `video.html?id=${videoId}`;
+}
+
+function showWatchHistory() {
+    const history = watchHistory.map(item => `
+        <div class="video-card" onclick="playVideo('${item.id}')">
+            <div style="padding: 1rem">
+                <h4>İzlenen Video ID: ${item.id}</h4>
+                <small>${new Date(item.timestamp).toLocaleString('tr-TR')}</small>
+            </div>
+        </div>
+    `).join('');
+    videoGrid.innerHTML = `<h3>İzleme Geçmişi</h3>${history}`;
 }
 
 function handleSearch(event) {
