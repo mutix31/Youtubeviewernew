@@ -71,7 +71,8 @@ async function loadRelatedVideos() {
         const response = await fetch(`${YT_API_URL}/search?part=snippet&relatedToVideoId=${videoId}&type=video&key=${API_KEY}&maxResults=5`);
         const data = await response.json();
         if (data.error) {
-            alert('Önerilen videolar yüklenirken hata oluştu.');
+            console.error('API Hatası:', data.error);
+            alert('Önerilen videolar yüklenirken hata oluştu. Lütfen daha sonra tekrar deneyin.');
             return;
         }
 
@@ -93,6 +94,7 @@ async function loadRelatedVideos() {
         document.querySelector('main').appendChild(relatedVideos);
     } catch (error) {
         console.error('Önerilen videolar yüklenirken hata oluştu:', error);
+        alert('Önerilen videolar yüklenirken hata oluştu. Lütfen daha sonra tekrar deneyin.');
     }
 }
 
