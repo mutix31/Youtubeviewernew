@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <strong>YouTube Viewer</strong>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <button class="navbar-item" onclick="showWatchHistory()">📜 İzleme Geçmişi</button>
+                <button class="navbar-item" onclick="toggleFavorites()">❤️ Favorilerim</button>
+            </div>
+            <div class="navbar-end">
+                <button class="navbar-item" onclick="toggleTheme()">🌙 Tema Değiştir</button>
+                <button class="navbar-item" onclick="toggleSettings()">⚙️ Ayarlar</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <input type="search" id="searchInput" placeholder="🔍 Video ara..." 
+               class="full-width" onkeyup="handleSearch(event)">
+        <div id="videoGrid" class="video-grid"></div>
+        <div id="loadingSpinner" class="loading-spinner"></div>
+    </main>
+
+    <div id="settingsModal" class="settings-modal">
+        <h2>⚙️ Ayarlar</h2>
+        <label>API Anahtarınız:
+            <input type="text" id="apiKey" placeholder="AIzaSy..." disabled>
+        </label>
+        <label>Dil Seçin:
+            <select id="language" onchange="applyLanguage()">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+                <option value="de">Almanca</option>
+            </select>
+        </label>
+        <label>Sıralama Filtresi:
+            <select id="filter" onchange="applyFilter()">
+                <option value="date">Tarihe Göre</option>
+                <option value="views">Görüntülenme Sayısı</option>
+                <option value="duration">Süreye Göre</option>
+            </select>
+        </label>
+        <button onclick="saveSettings()">Kaydet</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
