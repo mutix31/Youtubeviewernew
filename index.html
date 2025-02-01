@@ -11,6 +11,7 @@
     <nav class="container">
         <ul><li><strong>YouTube Viewer</strong></li></ul>
         <ul>
+            <li><button onclick="showWatchHistory()">📜 İzleme Geçmişi</button></li>
             <li><button onclick="toggleFavorites()">❤️ Favorilerim</button></li>
             <li>
                 <select id="language" onchange="applyLanguage()">
@@ -41,7 +42,7 @@
     <div id="settingsModal" class="settings-modal">
         <h2>⚙️ Ayarlar</h2>
         <label>API Anahtarınız:
-            <input type="text" id="apiKey" placeholder="AIzaSy...">
+            <input type="text" id="apiKey" placeholder="AIzaSy..." disabled>
         </label>
         <button onclick="saveSettings()">Kaydet</button>
     </div>
