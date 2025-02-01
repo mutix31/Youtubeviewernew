@@ -1,5 +1,5 @@
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = localStorage.getItem('ytApiKey') || ''; // localStorage'dan API anahtarını al
+const API_KEY = localStorage.getItem('ytApiKey') || '';
 const videoId = new URLSearchParams(window.location.search).get('id');
 const videoPlayer = document.getElementById('videoPlayer');
 const videoDetails = document.getElementById('videoDetails');
@@ -43,5 +43,4 @@ function formatNumber(num) {
     return parseInt(num).toLocaleString('tr-TR');
 }
 
-// Sayfa yüklendiğinde video detaylarını yükle
 document.addEventListener('DOMContentLoaded', loadVideoDetails);
