@@ -1,15 +1,10 @@
 const YT_API_URL = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = localStorage.getItem('ytApiKey') || '';
+const API_KEY = 'AIzaSyAzY7noObHLIYwpx1Z3pkub-1PMCTrHbHM'; // API anahtarı buraya eklendi
 const videoId = new URLSearchParams(window.location.search).get('id');
 const videoPlayer = document.getElementById('videoPlayer');
 const videoDetails = document.getElementById('videoDetails');
 
 async function loadVideoDetails() {
-    if (!API_KEY) {
-        alert('Lütfen API anahtarınızı ayarlayın.');
-        return;
-    }
-
     try {
         const response = await fetch(`${YT_API_URL}/videos?part=snippet,statistics&id=${videoId}&key=${API_KEY}`);
         const data = await response.json();
